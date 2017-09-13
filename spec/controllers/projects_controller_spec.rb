@@ -23,10 +23,10 @@ RSpec.describe 'Projects API', type: :request do
 
   # Test suite for GET /projects/:id
   describe 'GET /projects/:id' do
-    before { get "/projects/:project_id}" }
+    before { get "/projects/:project_id" }
 
     context 'when the record exists' do
-      it 'returns tproject' do
+      it 'returns project' do
         expect(json).not_to be_empty
         expect(json['id']).to eq(project_id)
       end

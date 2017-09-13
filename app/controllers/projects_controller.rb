@@ -1,15 +1,15 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only [:show, :update, :destroy]
+  before_action :set_project, only: [:show, :update, :destroy]
 
    # GET /projects
   def index
-    @projects = Todo.all
+    @projects = Project.all
     json_response(@projects)
   end
 
   # POST /projects
   def create
-    @project = project.create!(project_params)
+    @project = Project.create!(project_params)
     json_response(@project, :created)
   end
 
@@ -38,6 +38,6 @@ class ProjectsController < ApplicationController
   end
 
   def set_project
-    @project = project.find(params[:id])
+    @project = Project.find(params[:id])
   end
 end

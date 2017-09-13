@@ -36,7 +36,7 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
-RSpec.configuration do |config|
+RSpec.configure do |config|
   # add `FactoryGirl` methods
   config.include FactoryGirl::Syntax::Methods
   config.include RequestSpecHelper, type: :request
