@@ -23,7 +23,7 @@ RSpec.describe 'Projects API', type: :request do
 
   # Test suite for GET /projects/:id
   describe 'GET /projects/:id' do
-    before { get "/projects/:project_id" }
+    before { get "/projects/#{project_id}" }
 
     context 'when the record exists' do
       it 'returns project' do
@@ -44,7 +44,7 @@ RSpec.describe 'Projects API', type: :request do
       end
 
       it 'returns a not found message' do
-        expect(response.body).to match(/Couldn't find project/)
+        expect(response.body).to match(/Couldn't find Project with 'id'=100/)
       end
     end
   end
@@ -85,7 +85,7 @@ RSpec.describe 'Projects API', type: :request do
     let(:valid_attributes) { { title: 'Another Super Project' } }
 
     context 'when the record exists' do
-      before { put "/projects/:project_id}", params: valid_attributes }
+      before { put "/projects/#{project_id}", params: valid_attributes }
 
       it 'updates the record' do
         expect(response.body).to be_empty
@@ -99,7 +99,7 @@ RSpec.describe 'Projects API', type: :request do
 
   # Test suite for DELETE /projects/:id
   describe 'DELETE /projects/:id' do
-    before { delete "/projects/:project_id}" }
+    before { delete "/projects/#{project_id}" }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)
