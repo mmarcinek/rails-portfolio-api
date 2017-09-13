@@ -1,36 +1,37 @@
 require 'rails_helper'
 
-RSpec.describe ProjectsController, type: :controller do
-  # init test data
+RSpec.describe 'Projects API', type: :request do
+  # initialize test data 
   let!(:projects) { create_list(:project, 10) }
-  let(:project_id) { project.first.id }
+  let(:project_id) { projects.first.id }
 
-  # spec for GET /projects do
+  # Test suite for GET /projects
   describe 'GET /projects' do
-    # make HTTP get request before each 
+    # make HTTP get request before each example
     before { get '/projects' }
 
     it 'returns projects' do
+      # Note `json` is a custom helper to parse JSON responses
       expect(json).not_to be_empty
       expect(json.size).to eq(10)
-    endata
+    end
 
     it 'returns status code 200' do
       expect(response).to have_http_status(200)
     end
   end
 
-  # spec for GET /todos/:id
+  # Test suite for GET /projects/:id
   describe 'GET /projects/:id' do
-    before { get '/projects/#{project_id}' }
+    before { get "/projects/:project_id}" }
 
     context 'when the record exists' do
-      it 'returns the project' do
+      it 'returns tproject' do
         expect(json).not_to be_empty
         expect(json['id']).to eq(project_id)
       end
 
-      it 'returns status code 200' do 
+      it 'returns status code 200' do
         expect(response).to have_http_status(200)
       end
     end
@@ -43,61 +44,65 @@ RSpec.describe ProjectsController, type: :controller do
       end
 
       it 'returns a not found message' do
-        expect(response.body).to match(/Couldn't find Project/)
+        expect(response.body).to match(/Couldn't find project/)
       end
     end
+  end
 
-    # Test for POST /projects
-    describe 'POST /projects' do
+  # Test suite for POST /projects
+  describe 'POST /projects' do
     # valid payload
     let(:valid_attributes) { { title: 'Super Project', created_by: '1' } }
 
-    it 'creates a project' do
-      expect(json['title']).to eq('Super Project')
-    end 
+    context 'when the request is valid' do
+      before { post '/projects', params: valid_attributes }
 
-    it 'returns status code 201' do
-      expect(response).to have_http_status(201)
-    end 
-  end
+      it 'createsproject' do
+        expect(json['title']).to eq('Super Project')
+      end
 
-  context 'when the request is invalid' do 
-    before { post '/projects', params: {title: 'Foobar' } }
-
-    it 'returns status code 422' do
-      expect(response).to have_http_status(422)
+      it 'returns status code 201' do
+        expect(response).to have_http_status(201)
+      end
     end
 
-    it 'returns a validation failure message' do
-      expect(response.body).to match(/Validation failed: Created by can't be blank/)
+    context 'when the request is invalid' do
+      before { post '/projects', params: { title: 'Foobar' } }
+
+      it 'returns status code 422' do
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns a validation failure message' do
+        expect(response.body)
+          .to match(/Validation failed: Created by can't be blank/)
+      end
     end
   end
 
-  # spec for PUT /projects/:id
+  # Test suite for PUT /projects/:id
   describe 'PUT /projects/:id' do
-    let(:valid_attributes) { { title: 'Another Project' } }
+    let(:valid_attributes) { { title: 'Another Super Project' } }
 
     context 'when the record exists' do
-      before { put '/projects/#{project_id}', params: valid_attributes }
+      before { put "/projects/:project_id}", params: valid_attributes }
 
-      it 'updates the record' do 
+      it 'updates the record' do
         expect(response.body).to be_empty
-      end 
+      end
 
       it 'returns status code 204' do
         expect(response).to have_http_status(204)
       end
     end
   end
-  # spec or DELETE /project/:id
+
+  # Test suite for DELETE /projects/:id
   describe 'DELETE /projects/:id' do
-    before { delete '/projects/#{project_id}' }
-    
-    it 'returns status code 204' do 
-      ecpect(response).to have_http_status(204)
+    before { delete "/projects/:project_id}" }
+
+    it 'returns status code 204' do
+      expect(response).to have_http_status(204)
     end
   end
 end
-
-
-
