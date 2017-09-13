@@ -3,13 +3,16 @@ class AppsController < ApplicationController
 
   # GET /projects/:project_id/apps
   def index
-    @apps = App.where("project_id = ?", params['project_id']).all
+    @apps = App.where("project_id =? ", params['project_id']).all
     json_response(@apps)
   end
 
   # POST /projects/:project_id/apps
   def create
-    @app = App.create!(params)
+    @app = App.create!(app_params)
+    @app.project_id = params['project_id']
+    @app.save!
+
     json_response(@app, :created)
   end
 
@@ -20,7 +23,7 @@ class AppsController < ApplicationController
 
   # PUT /projects/:project_id/apps/:id
   def update
-    @app.update(params)
+    @app.update(app_params)
     head :no_content
   end
 
@@ -31,6 +34,11 @@ class AppsController < ApplicationController
   end
   
   def set_app
-    @app = App.find("project_id =? AND id=?", params['project_id'], params['id'])
+    @app = App.find(params['id'])
+  end
+
+  private
+  def app_params
+    params.require(:app).permit(:name)
   end
 end
