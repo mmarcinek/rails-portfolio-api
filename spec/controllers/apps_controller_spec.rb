@@ -19,7 +19,7 @@ RSpec.describe 'Apps API', type: :request do
     before { get "/projects/:project_id/apps/#{id}" }
 
     context 'when the record exists' do
-      it 'returns project' do
+      it 'returns app' do
         expect(json).not_to be_empty
         expect(json['project_id']).to eq(project_id)
       end
@@ -31,6 +31,7 @@ RSpec.describe 'Apps API', type: :request do
 
     context 'when the record does not exist' do
       let(:id) { 100 }
+      let(:project_id) {100}
 
       it 'returns status code 404' do
         expect(response).to have_http_status(404)

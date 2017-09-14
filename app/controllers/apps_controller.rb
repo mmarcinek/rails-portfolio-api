@@ -29,7 +29,7 @@ class AppsController < ApplicationController
 
   # DELETE /projects/:project_id/apps/:id
   def destroy
-    if @app = App.where(:project_id => params['project_id']).where(:id => params['id']).first
+    if @app
       @app.destroy
       head :no_content
     else
@@ -38,7 +38,7 @@ class AppsController < ApplicationController
   end
   
   def set_app
-    @app = App.find(params['id'])
+    @app = App.where(:project_id => params['project_id']).where(:id => params['id']).first
   end
 
   private
