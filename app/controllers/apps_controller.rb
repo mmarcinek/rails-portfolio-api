@@ -34,7 +34,14 @@ class AppsController < ApplicationController
   end
   
   def set_app
-    @app = App.find(params['id'])
+    project_id = params['project_id']
+    id =  params['id']
+    if @app = App.where(:project_id => project_id ).where(:id => id).first
+      @app.destroy
+      head :no_content
+    else
+      json_response( :error => 'An app with that id for does not exist for this project')
+    end
   end
 
   private
