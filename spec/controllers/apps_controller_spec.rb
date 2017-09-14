@@ -7,7 +7,7 @@ RSpec.describe 'Apps API', type: :request do
   # Test spec for GET /projects/:project_id/apps
   describe 'GET /projects/:project_id/apps' do
     before { get '/projects/:project_id/apps' }
-    
+
     it 'returns status code 200' do
       expect(response).to have_http_status(200)
     end
