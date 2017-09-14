@@ -29,19 +29,16 @@ class AppsController < ApplicationController
 
   # DELETE /projects/:project_id/apps/:id
   def destroy
-    @app.destroy
-    head :no_content
-  end
-  
-  def set_app
-    project_id = params['project_id']
-    id =  params['id']
-    if @app = App.where(:project_id => project_id ).where(:id => id).first
+    if @app = App.where(:project_id => params['project_id']).where(:id => params['id']).first
       @app.destroy
       head :no_content
     else
       json_response( :error => 'An app with that id for does not exist for this project')
     end
+  end
+  
+  def set_app
+    @app = App.find(params['id'])
   end
 
   private

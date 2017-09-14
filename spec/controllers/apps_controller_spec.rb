@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Apps API', type: :request do
   let!(:apps) { create_list(:app, 5) }
+  let(:project_id) { apps.first.project_id }
   let(:id) { apps.first.id }
 
   # Test spec for GET /projects/:project_id/apps
@@ -20,7 +21,7 @@ RSpec.describe 'Apps API', type: :request do
     context 'when the record exists' do
       it 'returns project' do
         expect(json).not_to be_empty
-        expect(json['id']).to eq(id)
+        expect(json['project_id']).to eq(project_id)
       end
 
       it 'returns status code 200' do
@@ -93,8 +94,8 @@ RSpec.describe 'Apps API', type: :request do
   describe 'DELETE /projects/:project_id/apps/:id' do
     before { delete "/projects/:project_id/apps/#{id}" }
 
-    it 'returns status code 204' do
-      expect(response).to have_http_status(204)
+    it 'returns status code 200' do
+      expect(response).to have_http_status(200)
     end
   end
 
