@@ -39,6 +39,6 @@ class AppsController < ApplicationController
 
   private
   def app_params
-    params.require(:app).permit(:name)
+    params.permit(:name)
   end
 end
