@@ -55,4 +55,5 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'fog'
 gem 'mini_magick'
-gem 'carrierwave', '~> 1.0'
+gem 'paperclip'
+gem 'aws-sdk', '~> 2.3'

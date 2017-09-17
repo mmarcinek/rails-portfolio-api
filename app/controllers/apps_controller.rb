@@ -11,11 +11,6 @@ class AppsController < ApplicationController
   def create
     @app = App.create!(app_params)
     @app.project_id = params['project_id']
-
-    # create new upload instance to S3
-    uploader = ImageUploader.new   
-    uploader.store!(:image)
-
     @app.save!
 
     json_response(@app, :created)
@@ -48,6 +43,6 @@ class AppsController < ApplicationController
 
   private
   def app_params
-    params.permit(:id, :project_id, :name, :description)
+    params.permit(:id, :project_id, :name, :description, :image)
   end
 end
