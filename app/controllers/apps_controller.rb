@@ -12,9 +12,9 @@ class AppsController < ApplicationController
     @app = App.create!(app_params)
     @app.project_id = params['project_id']
 
-    uploader = ImageUploader.new
-    image = app_params['image']
-    uploader.store!(image)
+    # create new upload instance to S3
+    uploader = ImageUploader.new   
+    uploader.store!(:image)
 
     @app.save!
 
@@ -28,9 +28,6 @@ class AppsController < ApplicationController
 
   # PUT /projects/:project_id/apps/:id
   def update
-    uploader = ImageUploader.new   
-    uploader.store!(:image)
-
     @app.update(app_params)
     head :no_content  
   end
