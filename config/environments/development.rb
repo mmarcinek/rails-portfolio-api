@@ -37,7 +37,6 @@ Rails.application.configure do
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
 
-
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
@@ -49,5 +48,17 @@ Rails.application.configure do
   S3_SECRET = Rails.application.secrets.S3_SECRET
   S3_BUCKET = Rails.application.secrets.S3_BUCKET
   S3_REGION = Rails.application.secrets.S3_REGION
+
+
+  config.paperclip_defaults = {
+    storage: :s3,
+    s3_credentials: {
+      bucket: ENV.fetch('S3_BUCKET'),
+      access_key_id: ENV.fetch('S3_KEY'),
+      secret_access_key: ENV.fetch('S3_SECRET'),
+      s3_region: ENV.fetch('S3_REGION'),
+    }
+  }
+  
   
 end
