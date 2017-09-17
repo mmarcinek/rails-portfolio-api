@@ -11,6 +11,11 @@ class AppsController < ApplicationController
   def create
     @app = App.create!(app_params)
     @app.project_id = params['project_id']
+
+    uploader = ImageUploader.new
+    image = app_params['image']
+    uploader.store!(image)
+
     @app.save!
 
     json_response(@app, :created)
@@ -23,10 +28,9 @@ class AppsController < ApplicationController
 
   # PUT /projects/:project_id/apps/:id
   def update
-    uploader = ImageUploader.new
-    image = app_params['image'].to_s
-    uploader.store!(image)
-    
+    uploader = ImageUploader.new   
+    uploader.store!(:image)
+
     @app.update(app_params)
     head :no_content  
   end
@@ -43,11 +47,10 @@ class AppsController < ApplicationController
   
   def set_app
     @app = App.where(:project_id => params['project_id']).where(:id => params['id']).first
-    puts @app.inspect
   end
 
   private
   def app_params
-    params.permit(:id, :project_id, :name, :image, :description)
+    params.permit(:id, :project_id, :name, :description)
   end
 end
