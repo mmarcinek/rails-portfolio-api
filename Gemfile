@@ -18,6 +18,11 @@ gem 'puma', '~> 3.7'
 # gem 'bcrypt', '~> 3.1.7'
 # For ENV variable management
 gem "figaro"
+gem 'devise'
+gem 'fog'
+gem 'mini_magick'
+gem 'paperclip'
+gem 'aws-sdk', '~> 2.3'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -53,7 +58,4 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-gem 'fog'
-gem 'mini_magick'
-gem 'paperclip'
-gem 'aws-sdk', '~> 2.3'
+

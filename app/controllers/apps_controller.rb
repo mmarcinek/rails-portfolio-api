@@ -18,6 +18,7 @@ class AppsController < ApplicationController
 
   # GET /projects/:project_id/apps/:id
   def show
+    @app.image = @app.image.url
     json_response(@app)
   end
 
