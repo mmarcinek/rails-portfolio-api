@@ -23,6 +23,7 @@ gem 'fog'
 gem 'mini_magick'
 gem 'paperclip'
 gem 'aws-sdk', '~> 2.3'
+gem 'jekyll-spark'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
